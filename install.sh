@@ -7,25 +7,25 @@ fi
 
 REPO="batchdelete/oblivion"
 TMP_DIR="/tmp/Oblivion"
+ZIP_NAME="oblivion.zip"
 APP_NAME="Oblivion.app"
 APP_PATH="/Applications/$APP_NAME"
 
 mkdir -p "$TMP_DIR"
 
-echo "Fetching latest release from GitHub..."
+echo "Fetching latest release info..."
 
 url=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" \
-  | grep -Eo '"browser_download_url":[^"]+\.zip"' \
-  | head -n 1 \
-  | sed 's/"browser_download_url":"//;s/"//')
+  | grep -Eo '"browser_download_url": "[^"]+' \
+  | grep "$ZIP_NAME" \
+  | sed 's/"browser_download_url": "//')
 
 if [ -z "$url" ]; then
-  echo "Failed to find a ZIP asset in the latest release."
+  echo "Failed to find $ZIP_NAME in the latest release."
   exit 1
 fi
 
-echo "Found release asset:"
-echo "$url"
+echo "Found release asset: $url"
 
 if [ -d "$APP_PATH" ]; then
   echo "Removing existing Oblivion installation..."
@@ -33,10 +33,10 @@ if [ -d "$APP_PATH" ]; then
 fi
 
 echo "Downloading Oblivion..."
-curl -L -o "$TMP_DIR/oblivion.zip" "$url"
+curl -L -o "$TMP_DIR/$ZIP_NAME" "$url"
 
 echo "Extracting Oblivion..."
-unzip -o "$TMP_DIR/oblivion.zip" -d "$TMP_DIR"
+unzip -o "$TMP_DIR/$ZIP_NAME" -d "$TMP_DIR"
 
 APP_FOUND=$(find "$TMP_DIR" -maxdepth 2 -name "*.app" -type d | head -n 1)
 
