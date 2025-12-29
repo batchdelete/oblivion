@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Ensure macOS
 if [ "$(uname)" != "Darwin" ]; then
   echo "This script is intended for macOS only."
   exit 1
