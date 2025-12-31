@@ -8,7 +8,7 @@ fi
 TMP_DIR="/tmp/Oblivion"
 APP_NAME="Oblivion.app"
 APP_PATH="/Applications/$APP_NAME"
-ZIP_URL="https://github.com/batchdelete/oblivion/releases/download/1.0.0/oblivion.zip"
+ZIP_URL="https://github.com/batchdelete/oblivion/releases/download/2.0.0/oblivion.zip"
 
 mkdir -p "$TMP_DIR"
 
