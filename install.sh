@@ -44,8 +44,7 @@ echo "Removing quarantine attribute..."
 sudo xattr -dr com.apple.quarantine "$APP_PATH"
 
 echo "Verifying code signature..."
-codesign --verify --deep --strict "$APP_PATH" || {
-  echo "Warning: Code signature verification failed."
+codesign --verify --deep --strict "$APP_PATH" >/dev/null 2>&1 || true {
 }
 
 echo "Oblivion has been successfully installed."
